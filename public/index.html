@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat App con IA</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <section id="authView" class="panel auth-panel">
+      <div class="tabs">
+        <button class="tab active" data-auth-tab="login">Iniciar sesion</button>
+        <button class="tab" data-auth-tab="register">Crear usuario</button>
+        <button class="tab" data-auth-tab="verify">Verificar</button>
+        <button class="tab" data-auth-tab="recover">Recuperar</button>
+      </div>
+
+      <div id="flash" class="flash"></div>
+
+      <form id="loginForm" class="form auth-form active">
+        <h2>Bienvenido</h2>
+        <input name="email" type="email" placeholder="Correo" required />
+        <input name="password" type="password" placeholder="Contrasena" required />
+        <button type="submit">Entrar</button>
+      </form>
+
+      <form id="registerForm" class="form auth-form">
+        <h2>Crear cuenta</h2>
+        <input name="name" placeholder="Nombre completo" required />
+        <input name="email" type="email" placeholder="Correo" required />
+        <input name="password" type="password" placeholder="Contrasena" required />
+        <button type="submit">Registrar</button>
+      </form>
+
+      <form id="verifyForm" class="form auth-form">
+        <h2>Verificar cuenta</h2>
+        <input name="email" type="email" placeholder="Correo" required />
+        <input name="code" placeholder="Codigo de 6 digitos" required />
+        <button type="submit">Verificar</button>
+      </form>
+
+      <form id="recoverForm" class="form auth-form">
+        <h2>Recuperar contrasena</h2>
+        <input name="email" type="email" placeholder="Correo" required />
+        <button type="button" id="sendRecoveryBtn">Enviar codigo</button>
+        <input name="code" placeholder="Codigo recibido" />
+        <input name="newPassword" type="password" placeholder="Nueva contrasena" />
+        <button type="submit">Cambiar contrasena</button>
+      </form>
+    </section>
+
+    <section id="chatView" class="chat-layout hidden">
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <div>
+            <h2>Mis chats</h2>
+            <p id="currentUserLabel"></p>
+          </div>
+          <button id="logoutBtn" class="ghost">Salir</button>
+        </div>
+
+        <div class="profile-box">
+          <h3>Configuracion del usuario</h3>
+          <form id="profileForm" class="compact-form">
+            <input name="name" placeholder="Nombre" />
+            <input name="status_text" placeholder="Estado" />
+            <div class="avatar-section">
+              <img id="currentAvatar" src="" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%; display: none;" />
+              <input type="file" id="avatarInput" accept="image/*" style="display: none;" />
+              <button type="button" id="changeAvatarBtn">Cambiar foto de perfil</button>
+            </div>
+            <button type="submit">Guardar cambios</button>
+          </form>
+        </div>
+
+        <div class="search-box">
+          <input id="userSearchInput" placeholder="Buscar usuarios por nombre o correo" />
+          <button id="searchUsersBtn">Buscar</button>
+        </div>
+
+        <div id="searchResults" class="search-results"></div>
+        <div id="conversationList" class="conversation-list"></div>
+      </aside>
+
+      <main class="chat-main">
+        <div class="chat-header">
+          <div>
+            <h2 id="chatTitle">Selecciona un chat</h2>
+            <p id="chatSubtitle"></p>
+          </div>
+        </div>
+
+        <div id="messages" class="messages"></div>
+
+        <form id="messageForm" class="message-form">
+          <input id="messageInput" placeholder="Escribe un mensaje..." autocomplete="off" />
+          <input type="file" id="fileInput" accept="image/*,video/*,audio/*,application/*" style="display: none;" />
+          <button type="button" id="attachBtn" title="Compartir imagen o archivo">Adjuntar</button>
+          <button type="button" id="locationBtn" title="Compartir ubicacion">Ubicacion</button>
+          <button type="submit">Enviar</button>
+        </form>
+      </main>
+    </section>
+  </div>
+
+  <div id="avatarModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Seleccionar foto de perfil</h3>
+      <button id="galleryBtn">Desde galeria</button>
+      <button id="cameraBtn">Tomar foto</button>
+      <button id="closeModalBtn">Cancelar</button>
+    </div>
+  </div>
+
+  <div id="cameraModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Tomar foto</h3>
+      <video id="cameraVideo" autoplay></video>
+      <canvas id="cameraCanvas" style="display: none;"></canvas>
+      <button id="captureBtn">Capturar</button>
+      <button id="retakeBtn" style="display: none;">Volver a tomar</button>
+      <button id="uploadPhotoBtn" style="display: none;">Subir foto</button>
+      <button id="closeCameraBtn">Cancelar</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

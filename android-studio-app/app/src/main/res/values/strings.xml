@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Chat App Android</string>
+    <string name="error_title">No se pudo abrir la aplicacion</string>
+    <string name="error_message">Revisa tu conexion o la URL publica del servidor.</string>
+    <string name="retry">Reintentar</string>
+    <string name="file_chooser_title">Selecciona un archivo</string>
+    <string name="file_chooser_error">No se pudo abrir el selector de archivos.</string>
+</resources>
